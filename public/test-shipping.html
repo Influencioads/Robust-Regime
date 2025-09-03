@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Charges Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #fe6302;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .pincode-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #fe6302;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #e55a02;
+        }
+        .result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            border-left: 4px solid #fe6302;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .test-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .test-item.success {
+            border-left: 4px solid #28a745;
+        }
+        .test-item.error {
+            border-left: 4px solid #dc3545;
+        }
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fe6302;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚚 Shipping Charges Test</h1>
+        
+        <div class="test-section">
+            <h3>Test Custom Pincode</h3>
+            <div class="pincode-input">
+                <input type="text" id="customPincode" placeholder="Enter 6-digit pincode" maxlength="6">
+                <button onclick="testCustomPincode()">Get Shipping Cost</button>
+            </div>
+            <div id="customResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>Test All Major Cities</h3>
+            <button onclick="testAllCities()">Run All Tests</button>
+            <div id="allResults" class="test-grid"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>Expected Pricing</h3>
+            <ul>
+                <li><strong>Maharashtra</strong> (400000-499999): ₹300 (Same state - Lower cost)</li>
+                <li><strong>Delhi</strong> (110000-110099): ₹400 (Medium cost)</li>
+                <li><strong>Bangalore</strong> (560000-560099): ₹450 (Medium cost)</li>
+                <li><strong>Chennai</strong> (600000-600099): ₹550 (Higher cost)</li>
+                <li><strong>Kolkata</strong> (700000-700099): ₹600 (Higher cost)</li>
+                <li><strong>Other locations</strong>: ₹500 (Standard cost)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Mock iCarry client for testing
+        const getMockICarryClient = () => {
+            return {
+                getQuote: async (payload) => {
+                    const destPin = parseInt(payload.destinationPincode);
+                    let amount = 500; // Default
+                    
+                    if (destPin >= 400000 && destPin <= 499999) {
+                        amount = 300; // Maharashtra
+                    } else if (destPin >= 110000 && destPin <= 110099) {
+                        amount = 400; // Delhi
+                    } else if (destPin >= 560000 && destPin <= 560099) {
+                        amount = 450; // Bangalore
+                    } else if (destPin >= 700000 && destPin <= 700099) {
+                        amount = 600; // Kolkata
+                    } else if (destPin >= 600000 && destPin <= 600099) {
+                        amount = 550; // Chennai
+                    }
+                    
+                    return {
+                        carrier: 'Mock Carrier',
+                        service: 'STANDARD',
+                        amount: amount,
+                        currency: 'INR',
+                    };
+                }
+            };
+        };
+
+        const mockClient = getMockICarryClient();
+
+        async function testCustomPincode() {
+            const pincode = document.getElementById('customPincode').value;
+            const resultDiv = document.getElementById('customResult');
+            
+            if (pincode.length !== 6) {
+                resultDiv.innerHTML = '<span style="color: red;">Please enter a valid 6-digit pincode</span>';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            try {
+                const quote = await mockClient.getQuote({
+                    originPincode: '422101',
+                    destinationPincode: pincode,
+                    weightKg: 5,
+                });
+                
+                resultDiv.innerHTML = `
+                    <strong>Pincode:</strong> ${pincode}<br>
+                    <strong>Shipping Cost:</strong> <span class="price">₹${quote.amount}</span><br>
+                    <strong>Service:</strong> ${quote.service}<br>
+                    <strong>Carrier:</strong> ${quote.carrier}
+                `;
+                resultDiv.style.display = 'block';
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: red;">Error: ${error.message}</span>`;
+                resultDiv.style.display = 'block';
+            }
+        }
+
+        async function testAllCities() {
+            const testCases = [
+                { pincode: '400001', city: 'Mumbai, Maharashtra', expected: 300 },
+                { pincode: '422101', city: 'Nashik, Maharashtra', expected: 300 },
+                { pincode: '411001', city: 'Pune, Maharashtra', expected: 300 },
+                { pincode: '110001', city: 'Delhi', expected: 400 },
+                { pincode: '560001', city: 'Bangalore, Karnataka', expected: 450 },
+                { pincode: '600001', city: 'Chennai, Tamil Nadu', expected: 550 },
+                { pincode: '700001', city: 'Kolkata, West Bengal', expected: 600 },
+                { pincode: '800001', city: 'Patna, Bihar', expected: 500 },
+                { pincode: '500001', city: 'Hyderabad, Telangana', expected: 500 },
+            ];
+            
+            const resultsDiv = document.getElementById('allResults');
+            resultsDiv.innerHTML = '';
+            
+            for (const testCase of testCases) {
+                try {
+                    const quote = await mockClient.getQuote({
+                        originPincode: '422101',
+                        destinationPincode: testCase.pincode,
+                        weightKg: 5,
+                    });
+                    
+                    const isSuccess = quote.amount === testCase.expected;
+                    const statusClass = isSuccess ? 'success' : 'error';
+                    const statusIcon = isSuccess ? '✅' : '❌';
+                    
+                    const testItem = document.createElement('div');
+                    testItem.className = `test-item ${statusClass}`;
+                    testItem.innerHTML = `
+                        <div>${statusIcon}</div>
+                        <div><strong>${testCase.pincode}</strong></div>
+                        <div>${testCase.city}</div>
+                        <div class="price">₹${quote.amount}</div>
+                        <div>Expected: ₹${testCase.expected}</div>
+                    `;
+                    
+                    resultsDiv.appendChild(testItem);
+                } catch (error) {
+                    const testItem = document.createElement('div');
+                    testItem.className = 'test-item error';
+                    testItem.innerHTML = `
+                        <div>❌</div>
+                        <div><strong>${testCase.pincode}</strong></div>
+                        <div>${testCase.city}</div>
+                        <div style="color: red;">Error: ${error.message}</div>
+                    `;
+                    
+                    resultsDiv.appendChild(testItem);
+                }
+            }
+        }
+
+        // Allow Enter key to trigger test
+        document.getElementById('customPincode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                testCustomPincode();
+            }
+        });
+    </script>
+</body>
+</html>
