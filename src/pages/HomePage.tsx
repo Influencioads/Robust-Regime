@@ -127,45 +127,45 @@ const HomePage: React.FC = () => {
         </div>
 
         {/* Feature Cards */}
-        {/* <div className="absolute bottom-4 sm:bottom-8 md:bottom-16 lg:bottom-24 left-0 right-0">
+        <div className="absolute bottom-4 sm:bottom-8 md:bottom-16 lg:bottom-24 left-0 right-0">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
               <div className="bg-white/10 backdrop-blur-sm p-2 sm:p-3 md:p-6 rounded-lg border border-white/20 hover:border-[#fe6302] transition-all cursor-pointer group">
                 <div className="flex items-center">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-[#fe6302] rounded-full flex items-center justify-center mr-2 sm:mr-3 md:mr-4 flex-shrink-0">
-                    <Shield className="h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6 text-white" />
-                  </div> */}
-                  {/* <div>
+                    <Award className="h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6 text-white" />
+                  </div>
+                  <div>
                     <h3 className="text-white font-semibold group-hover:text-[#fe6302] transition-colors text-xs sm:text-sm md:text-base">Premium Quality</h3>
                     <p className="text-white/60 text-xs md:text-sm">Professional-grade equipment</p>
-                  </div> */}
-                {/* </div>
-              </div> */}
-              {/* <div className="bg-white/10 backdrop-blur-sm p-2 sm:p-3 md:p-6 rounded-lg border border-white/20 hover:border-[#fe6302] transition-all cursor-pointer group">
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm p-2 sm:p-3 md:p-6 rounded-lg border border-white/20 hover:border-[#fe6302] transition-all cursor-pointer group">
                 <div className="flex items-center">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-[#fe6302] rounded-full flex items-center justify-center mr-2 sm:mr-3 md:mr-4 flex-shrink-0">
                     <Truck className="h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6 text-white" />
                   </div>
-                  {/* <div>
+                  <div>
                     <h3 className="text-white font-semibold group-hover:text-[#fe6302] transition-colors text-xs sm:text-sm md:text-base">Pan India Shipping</h3>
                     <p className="text-white/60 text-xs md:text-sm">We deliver to every corner of India</p>
-                  </div> */}
-                {/* </div>
-              </div>  */}
-              {/* <div className="bg-white/10 backdrop-blur-sm p-2 sm:p-3 md:p-6 rounded-lg border border-white/20 hover:border-[#fe6302] transition-all cursor-pointer group sm:col-span-2 md:col-span-1">
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm p-2 sm:p-3 md:p-6 rounded-lg border border-white/20 hover:border-[#fe6302] transition-all cursor-pointer group sm:col-span-2 md:col-span-1">
                 <div className="flex items-center">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-[#fe6302] rounded-full flex items-center justify-center mr-2 sm:mr-3 md:mr-4 flex-shrink-0">
-                    <Award className="h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6 text-white" />
+                    <HeartHandshake className="h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6 text-white" />
                   </div>
-                  {/* <div>
+                  <div>
                     <h3 className="text-white font-semibold group-hover:text-[#fe6302] transition-colors text-xs sm:text-sm md:text-base">5-Year Warranty</h3>
                     <p className="text-white/60 text-xs md:text-sm">Guaranteed durability</p>
-                  </div> */}
-                {/* </div>
-              // </div> */}
-            {/* </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div> */}
+        </div>
       </section>
 
       {/* Categories Preview */}

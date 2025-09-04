@@ -21,7 +21,7 @@ const OrderSuccessPage: React.FC = () => {
           </p>
           <Link
             to="/"
-            className="inline-block bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition-colors"
+            className="inline-block bg-[#fe6302] text-white px-6 py-3 rounded-md hover:bg-[#fe6302]/90 transition-colors"
           >
             Continue Shopping
           </Link>
@@ -114,7 +114,7 @@ const OrderSuccessPage: React.FC = () => {
           <div className="mt-8 text-center">
             <Link
               to="/"
-              className="inline-block bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition-colors"
+              className="inline-block bg-[#fe6302] text-white px-6 py-3 rounded-md hover:bg-[#fe6302]/90 transition-colors"
             >
               Continue Shopping
             </Link>

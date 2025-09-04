@@ -272,11 +272,26 @@ const ProductPage: React.FC = () => {
 
   // Initialize selected variants if available
   React.useEffect(() => {
-    // Don't auto-select weight variants - let user choose
+    // Auto-select first weight variant for product ID 8 (Hex Dumbbells)
+    if (product?.id === '8' && product.weightVariants?.length && !selectedWeightVariant) {
+      setSelectedWeightVariant(product.weightVariants[0]);
+    }
+    
+    // Auto-select first weight variant for product ID 9 (Maverick Adjustable Dumbbell)
+    if (product?.id === '9' && product.weightVariants?.length && !selectedWeightVariant) {
+      setSelectedWeightVariant(product.weightVariants[0]);
+    }
+    
+    // Auto-select first weight option for product ID 9 when weight variant is selected
+    if (product?.id === '9' && selectedWeightVariant?.weightOptions?.length && !selectedWeightOption) {
+      setSelectedWeightOption(selectedWeightVariant.weightOptions[0]);
+    }
+    
+    // Auto-select color variants if available
     if (product.ColorVariant?.length && !selectedColorVariant) {
       setSelectedColorVariant(product.ColorVariant.find(v => v.inStock) || null);
     }
-  }, [product.ColorVariant, selectedColorVariant]);
+  }, [product, selectedWeightVariant, selectedWeightOption, selectedColorVariant]);
 
   return (
     <div className="bg-white min-h-screen">

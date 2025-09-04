@@ -118,9 +118,22 @@ const CheckoutPage: React.FC = () => {
         setIcarryLoading(true);
         setIcarryError(null);
         
-        // Use mock shipping for clean experience
-        const mockClient = getMockICarryClient();
-        const quote = await mockClient.getQuote({
+        // Use real iCarry API if configured, otherwise fallback to mock
+        let client;
+        try {
+          if (isICarryConfigured()) {
+            console.log('🚀 Using real iCarry API');
+            client = getICarryClientFromEnv();
+          } else {
+            console.log('⚠️ iCarry not configured, using mock client');
+            client = getMockICarryClient();
+          }
+        } catch (error) {
+          console.warn('iCarry configuration error, using mock client:', error);
+          client = getMockICarryClient();
+        }
+        
+        const quote = await client.getQuote({
           originPincode: '422101',
           destinationPincode: destPin,
           weightKg: 5,
@@ -129,7 +142,13 @@ const CheckoutPage: React.FC = () => {
         if (aborted) return;
         setIcarryAmount(Number(quote.amount || 0));
         setIcarryService(quote.service || 'STANDARD');
-        setIcarryError(null); // No error messages
+        setIcarryError(null);
+      } catch (error) {
+        if (aborted) return;
+        console.error('iCarry quote error:', error);
+        setIcarryError('Unable to fetch shipping quote');
+        setIcarryAmount(null);
+        setIcarryService(null);
       } finally {
         if (!aborted) setIcarryLoading(false);
       }

@@ -926,9 +926,9 @@ export const products: Product[] = [
     },
        weightVariants: [
       {
-        weight: "2.5kg",
-        price: 1950,
-        salePrice: 950,
+        weight: "25kg",
+        price: 10000,
+        salePrice: 9500,
         inStock: true,
         weightOptions: [
           {
@@ -1053,8 +1053,8 @@ export const products: Product[] = [
     id: '9',
     name: "Maverick-Adjustable-Dumbell",
     category: "dumbbells",
-    price: 30000,
-    priceRange: "₹17499.00 – ₹32,599.00",
+    price: 32999,
+    priceRange: "₹4,499.00 – ₹32,599.00",
     images: [
       "/Robust-Dumbells/Maverick-Adjustable-Dumbell-1.jpeg",
       "/Robust-Dumbells/Maverick-Adjustable-Dumbell-2.png",
@@ -1087,8 +1087,8 @@ export const products: Product[] = [
 weightVariants: [
       {
         weight: "25kg (Set)",
-        price: 18499,
-        salePrice: 17499,
+        price: 4999,
+        salePrice: 4499,
         inStock: true,
         variantImages: [
           "/25kg(set)/Adjustable Dumbbell 5 kg.webp",

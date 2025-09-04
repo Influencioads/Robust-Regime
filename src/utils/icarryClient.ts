@@ -105,25 +105,42 @@ export class ICarryClient {
   private async ensureToken(): Promise<string> {
     const now = Date.now();
     if (this.apiToken && this.tokenFetchedAt && now - this.tokenFetchedAt < 55 * 60 * 1000) {
+      console.log('🔑 Using cached iCarry token');
       return this.apiToken;
     }
+    
+    console.log('🔑 Fetching new iCarry token...');
     const body = new URLSearchParams();
     body.append('username', this.config.username);
     body.append('Key', this.config.key);
+    
     const res = await fetch(`${this.config.apiBaseUrl}/api_login`, {
       method: 'POST',
       headers: this.formHeaders(),
       body,
     });
-    if (!res.ok) throw new Error(`iCarry login failed: ${res.status}`);
+    
+    if (!res.ok) {
+      console.error('❌ iCarry login failed:', res.status, res.statusText);
+      throw new Error(`iCarry login failed: ${res.status}`);
+    }
+    
     const data = await res.json();
-    if (!data.api_token) throw new Error('iCarry login missing api_token');
+    console.log('🔑 iCarry login response:', data);
+    
+    if (!data.api_token) {
+      console.error('❌ iCarry login missing api_token');
+      throw new Error('iCarry login missing api_token');
+    }
+    
     this.apiToken = data.api_token;
     this.tokenFetchedAt = Date.now();
+    console.log('✅ iCarry token obtained successfully');
     return this.apiToken!;
   }
 
   async getQuote(payload: QuoteRequest): Promise<QuoteResponse> {
+    console.log('📦 iCarry getQuote called with:', payload);
     const apiToken = await this.ensureToken();
     // Map to iCarry estimate request per official docs
     const length = Math.round(payload.lengthCm ?? 10);
