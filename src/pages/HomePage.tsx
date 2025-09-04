@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { ArrowRight, Truck, Award, HeartHandshake, Clock, ArrowDownToLine, ChevronRight, Star, Shield, ChevronLeft } from 'lucide-react';
+import { Truck, Award, HeartHandshake, Clock, ChevronRight, Star, ChevronLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { products } from '../data/products';
 import { categories } from '../data/categories';
@@ -8,8 +8,15 @@ import CategoryCard from '../components/ui/CategoryCard';
 import Button from '../components/ui/Button';
 
 const HomePage: React.FC = () => {
-  const featuredProducts = products.filter(product => product.featured);
-  const bestSellers = products.filter(product => product.bestSeller);
+  // Get all featured products
+  const allFeaturedProducts = products.filter(product => product.featured);
+  
+  // For featured products, take the first 4
+  const featuredProducts = allFeaturedProducts.slice(0, 4);
+  
+  // For best sellers, use the same products as featured but in different order
+  // Create a reordered array by moving the first product to the end
+  const bestSellers = [...featuredProducts.slice(1), featuredProducts[0]];
   const categorySliderRef = useRef<HTMLDivElement>(null);
   const testimonialSliderRef = useRef<HTMLDivElement>(null);
 
@@ -27,15 +34,7 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const scrollToTestimonial = (index: number) => {
-    if (testimonialSliderRef.current) {
-      const testimonialWidth = 400; // Approximate width of each testimonial
-      testimonialSliderRef.current.scrollTo({ 
-        left: index * testimonialWidth, 
-        behavior: 'smooth' 
-      });
-    }
-  };
+
 
   // Placeholder logo data (replace with actual logo URLs)
   const brandLogos = [
@@ -90,21 +89,29 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-screen flex items-center justify-center pt-20 sm:pt-16">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
-          <img 
-            src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg" 
-            alt= "Fitness Equipment" 
-            className="w-full h-full object-cover"
+      <section className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-screen flex items-center justify-center pt-20 sm:pt-16 overflow-hidden w-full">
+        <div className="absolute inset-0 z-0 w-full h-full">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70 z-10"></div>
+          <div 
+            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: 'url(https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center',
+              backgroundRepeat: 'no-repeat',
+              minHeight: '100vh',
+              minWidth: '100vw',
+              width: '100%',
+              height: '100%'
+            }}
           />
         </div>
         <div className="container mx-auto px-4 relative z-10 flex items-center justify-center min-h-full">
-          <div className="flex flex-col items-center text-center max-w-4xl mx-auto opacity-0 animate-fadeInUp">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-3 sm:mb-4 md:mb-6 leading-tight px-2">
+          <div className="flex flex-col items-center text-center max-w-4xl mx-auto opacity-0 animate-fadeInUp w-full">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-3 sm:mb-4 md:mb-6 leading-tight px-2 w-full">
               Premium Fitness Equipment
             </h1>
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-4 sm:mb-6 md:mb-8 max-w-2xl px-4">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-4 sm:mb-6 md:mb-8 max-w-2xl px-4 w-full">
               Professional-grade equipment engineered for performance, durability, and results. Made in India.
             </p>
             {/* <Link to="/shop" className="w-full sm:w-auto px-4">

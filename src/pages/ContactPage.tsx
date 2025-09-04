@@ -7,7 +7,7 @@ const ContactPage: React.FC = () => {
     name: '',
     email: '',
     phone: '',
-    subject: '',
+    product: '',
     message: ''
   });
 
@@ -76,7 +76,7 @@ const ContactPage: React.FC = () => {
                 className="text-center p-6 rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all opacity-0 animate-fadeInUp"
                 style={{ animationDelay: `${index * 200}ms` }}
               >
-                <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center bg-red-100 rounded-full text-red-600">
+                <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center bg-orange-100 rounded-full text-[#fe6302]">
                   {contact.icon}
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{contact.title}</h3>
@@ -90,85 +90,89 @@ const ContactPage: React.FC = () => {
             <div className="bg-white rounded-lg shadow-lg p-8 opacity-0 animate-fadeInLeft">
               <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                      Your Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
-                      required
-                    />
-                  </div>
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#fe6302] focus:border-[#fe6302]"
+                    placeholder="Enter your full name"
+                    required
+                  />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                      Subject
-                    </label>
-                    <select
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
-                      required
-                    >
-                      <option value="">Select a subject</option>
-                      <option value="product">Product Inquiry</option>
-                      <option value="support">Technical Support</option>
-                      <option value="warranty">Warranty Claim</option>
-                      <option value="business">Business Partnership</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#fe6302] focus:border-[#fe6302]"
+                    placeholder="Enter your email address"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#fe6302] focus:border-[#fe6302]"
+                    placeholder="Enter your phone number"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-1">
+                    Product Interest *
+                  </label>
+                  <select
+                    id="product"
+                    name="product"
+                    value={formData.product}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#fe6302] focus:border-[#fe6302]"
+                    required
+                  >
+                    <option value="">Select a product category</option>
+                    <option value="power-racks">Racks</option>
+                    <option value="dumbbells">Dumbbells</option>
+                    <option value="barbells">Barbells</option>
+                    <option value="benches">Benches</option>
+                    <option value="accessories">Accessories</option>
+                    <option value="combo-offers">Combo Offers</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                    Your Message
+                    Message
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    rows={6}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
-                    required
+                    rows={3}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#fe6302] focus:border-[#fe6302]"
+                    placeholder="Tell us about your fitness goals or specific requirements..."
                   ></textarea>
                 </div>
 
@@ -177,7 +181,7 @@ const ContactPage: React.FC = () => {
                   variant="primary"
                   size="lg"
                   fullWidth
-                  className="bg-red-600 hover:bg-red-700"
+                  className="bg-[#fe6302] hover:bg-[#fe6302]/90"
                 >
                   Send Message
                 </Button>

@@ -99,7 +99,9 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between min-w-0">
           {/* Logo */}
-          <img src="/logo-robust.webp" alt="Robust Regime Logo" className="max-h-16 w-auto object-contain" />
+          <Link to="/" className="flex items-center">
+            <img src="/logo-robust.webp" alt="Robust Regime Logo" className="max-h-16 w-auto object-contain cursor-pointer hover:opacity-90 transition-opacity" />
+          </Link>
 
           {/* Desktop Navigation - Full */}
           <nav className="hidden xl:flex items-center space-x-1 flex-shrink-0">

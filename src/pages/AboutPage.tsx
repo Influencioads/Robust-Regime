@@ -6,7 +6,7 @@ const AboutPage: React.FC = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[60vh] bg-gray-900 flex items-center pt-16">
+      <section className="relative h-[40vh] bg-gray-900 flex items-center justify-center pt-16">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.pexels.com/photos/4162451/pexels-photo-4162451.jpeg" 
@@ -15,12 +15,12 @@ const AboutPage: React.FC = () => {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-2xl opacity-0 animate-fadeInLeft -mt-12">
-            <h1 className="text-5xl font-bold text-white mb-6">
-              Empowering Your Fitness Journey
+          <div className="max-w-4xl mx-auto text-center opacity-0 animate-fadeInUp">
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-8 leading-tight">
+              About Robust Regime
             </h1>
-            <p className="text-xl text-white/90 leading-relaxed">
-              At Robust Regime, we're dedicated to providing premium fitness equipment that helps you achieve your fitness goals with confidence and safety.
+            <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto">
+              Empowering India's fitness journey with premium, cost-effective equipment designed for every athlete and fitness enthusiast.
             </p>
           </div>
         </div>
@@ -29,69 +29,86 @@ const AboutPage: React.FC = () => {
       {/* Our Story */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center opacity-0 animate-fadeInUp">
-            <h2 className="text-4xl font-bold mb-6">Our Story</h2>
+          <div className="w-full opacity-0 animate-fadeInUp">
+            {/* <h2 className="text-4xl font-bold mb-8 text-center">Our Story</h2> */}
             <p className="text-lg text-gray-600 leading-relaxed mb-8">
-              Founded in 2020, Robust Regime emerged from a simple vision: to make professional-grade fitness equipment accessible to everyone. What started as a small workshop in Nashik has grown into one of India's leading fitness equipment manufacturers.
-            </p>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Our commitment to quality, innovation, and customer satisfaction has helped us build a community of over 50,000 satisfied customers, from home fitness enthusiasts to professional athletes and commercial gym owners.
+              India is a developing country with a flourishing economy in all sectors. However, it faces challenges such as obesity, stress, and limited access to quality gym equipment. Many individuals struggle with time constraints, a lack of enthusiasm and energy, shortage of resources and equipment for dedicated athletes and regular fitness enthusiasts. We aim to find a solution to these issues.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Mission & Values */}
-      <section className="py-20 bg-gray-50">
+      {/* 4 Cards Section */}
+      <section className="py-8 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16 opacity-0 animate-fadeInUp">
-            <h2 className="text-4xl font-bold mb-4">Our Mission & Values</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We're driven by our commitment to excellence and our mission to make quality fitness equipment accessible to all.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: <Award className="h-8 w-8" />,
-                title: "Quality First",
-                description: "We never compromise on materials or craftsmanship, ensuring every piece meets our high standards."
-              },
-              {
-                icon: <Users className="h-8 w-8" />,
-                title: "Customer Focus",
-                description: "Your success is our success. We're here to support your fitness journey every step of the way."
-              },
-              {
-                icon: <Target className="h-8 w-8" />,
-                title: "Innovation",
-                description: "We continuously improve our products based on research and customer feedback."
-              },
-              {
-                icon: <TrendingUp className="h-8 w-8" />,
-                title: "Sustainability",
-                description: "We're committed to eco-friendly manufacturing processes and sustainable practices."
-              }
-            ].map((value, index) => (
-              <div 
-                key={index}
-                className="text-center p-8 rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 opacity-0 animate-fadeInUp"
-                style={{ animationDelay: `${index * 200}ms` }}
-              >
-                <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-red-100 rounded-full text-red-600">
-                  {value.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-4">{value.title}</h3>
-                <p className="text-gray-600">{value.description}</p>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Why We Are So Committed */}
+              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 opacity-0 animate-fadeInUp">
+                <h2 className="text-2xl font-bold mb-4 text-gray-900">Why We Are So Committed</h2>
+                <p className="text-gray-600 leading-relaxed">
+                  India is a developing country with a flourishing economy in all sectors. However, it faces challenges such as obesity, stress, and limited access to quality gym equipment. Many individuals struggle with time constraints, a lack of enthusiasm and energy, shortage of resources and equipment for dedicated athletes and regular fitness enthusiasts. We aim to find a solution to these issues.
+                </p>
               </div>
-            ))}
+              
+              {/* Our Story */}
+              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 opacity-0 animate-fadeInUp">
+                <h2 className="text-2xl font-bold mb-4 text-gray-900">Our Story</h2>
+                <p className="text-gray-600 leading-relaxed">
+                  India is a developing country with a flourishing economy in all sectors. However, it faces challenges such as obesity, stress, and limited access to quality gym equipment. Many individuals struggle with time constraints, a lack of enthusiasm and energy, shortage of resources and equipment for dedicated athletes and regular fitness enthusiasts. We aim to find a solution to these issues.
+                </p>
+              </div>
+
+              {/* Cost Effective */}
+              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 opacity-0 animate-fadeInUp">
+                <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                  <img 
+                    src="/cost-saving.webp" 
+                    alt="Cost Saving" 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-gray-900 text-center">Cost Effective</h3>
+                <p className="text-gray-600 leading-relaxed text-center">
+                  We want to be part of every fitness story through our brand, from regular fitness to athlete strength. We will be there for your purposes and goals. We believe in manufacturing our pieces of equipment at a reasonable price so that our clients can only bear the weight they want to lift. not the price they invested in weight.
+                </p>
+              </div>
+
+              {/* Best Quality */}
+              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 opacity-0 animate-fadeInUp">
+                <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                  <img 
+                    src="/quality-approve.webp" 
+                    alt="Quality Approved" 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-gray-900 text-center">Best Quality</h3>
+                <p className="text-gray-600 leading-relaxed text-center">
+                  We focus on designing equipment that must be robust and innovative. Using high-grade raw materials gives us the exact result Every aspect is checked while production to dispatch ensuring high-grade material gives robustness to the equipment Good quality surface treatment ensures a longer life span for equipment robust, innovative design confirms the withstand capacity at extreme workouts with safety assurance. and our personal favourite is testing the equipment.
+                </p>
+              </div>
+            </div>
+
+            {/* Small Logo Images */}
+            {/* <div className="mt-8 flex justify-center items-center space-x-8 opacity-0 animate-fadeInUp">
+              <img 
+                src="/cost-saving.webp" 
+                alt="Cost Saving" 
+                className="h-12 w-auto opacity-70 hover:opacity-100 transition-opacity"
+              />
+              <img 
+                src="/quality-approve.webp" 
+                alt="Quality Approved" 
+                className="h-12 w-auto opacity-70 hover:opacity-100 transition-opacity"
+              />
+            </div> */}
           </div>
         </div>
       </section>
 
       {/* Manufacturing Excellence */}
-      <section className="py-20 bg-white">
+      {/* <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="opacity-0 animate-fadeInLeft">
@@ -127,10 +144,10 @@ const AboutPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to Action */}
-      <section className="py-20 bg-gray-900 text-white">
+      {/* <section className="py-20 bg-gray-900 text-white">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto opacity-0 animate-fadeInUp">
             <h2 className="text-4xl font-bold mb-6">Join the Robust Regime Family</h2>
@@ -146,7 +163,7 @@ const AboutPage: React.FC = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

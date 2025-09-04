@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChevronLeft, CheckCircle, X } from 'lucide-react';
+import { ChevronLeft, CheckCircle, X, Tag } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useOrders } from '../context/OrderContext';
 import { Address } from '../types';
@@ -9,6 +9,7 @@ import { formatCurrency } from '../utils/formatters';
 import { calculateTax, getStateFromPincode } from '../utils/taxCalculator';
 import { getICarryClientFromEnv, isICarryConfigured, getMockICarryClient } from '../utils/icarryClient';
 import { validateEmail, validatePhone, validateName, validateAddress, validatePincode } from '../utils/validators';
+import { validateCoupon, CouponValidationResult } from '../utils/couponValidator';
 
 type PaymentMethod = 'cod' | 'online';
 
@@ -32,6 +33,11 @@ const CheckoutPage: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cod');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
+  
+  // Coupon state
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<CouponValidationResult | null>(null);
+  const [couponError, setCouponError] = useState('');
   
   const [shippingAddress, setShippingAddress] = useState<Address>({
     fullName: '',
@@ -70,7 +76,31 @@ const CheckoutPage: React.FC = () => {
       : shippingAddress.state;
   const taxCalculation = calculateTax(subtotal, buyerState);
   const shipping = icarryAmount != null ? icarryAmount : defaultShipping;
-  const total = subtotal + shipping + taxCalculation.totalTax;
+  const couponDiscount = appliedCoupon?.discountAmount || 0;
+  const total = subtotal + shipping + taxCalculation.totalTax - couponDiscount;
+
+  // Coupon functions
+  const handleApplyCoupon = () => {
+    if (!couponCode.trim()) {
+      setCouponError('Please enter a coupon code');
+      return;
+    }
+
+    const result = validateCoupon(couponCode, subtotal);
+    if (result.isValid) {
+      setAppliedCoupon(result);
+      setCouponError('');
+    } else {
+      setCouponError(result.message);
+      setAppliedCoupon(null);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode('');
+    setCouponError('');
+  };
 
   // Fetch iCarry quote when pincode is valid
   useEffect(() => {
@@ -540,6 +570,54 @@ const CheckoutPage: React.FC = () => {
                   <span className="text-gray-600">Subtotal</span>
                   <span className="font-medium">{formatCurrency(subtotal)}</span>
                 </div>
+                
+                {/* Coupon Code Section */}
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Apply coupon</h3>
+                  {!appliedCoupon ? (
+                    <div className="flex gap-3">
+                      <div className="flex-1">
+                        <input
+                          type="text"
+                          placeholder="Please enter a valid coupon code"
+                          value={couponCode}
+                          onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#fe6302] focus:border-transparent bg-gray-50"
+                        />
+                      </div>
+                      <button
+                        onClick={handleApplyCoupon}
+                        className="px-6 py-3 bg-[#fe6302] text-white rounded-lg hover:bg-[#fe6302]/90 transition-colors font-medium"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between bg-orange-50 border border-orange-200 rounded-lg p-4">
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-5 h-5 text-[#fe6302]" />
+                        <div>
+                          <p className="text-sm font-medium text-orange-800">
+                            Coupon "{couponCode}" applied
+                          </p>
+                          <p className="text-xs text-orange-600">
+                            {appliedCoupon.message}
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={handleRemoveCoupon}
+                        className="text-[#fe6302] hover:text-[#fe6302]/80 transition-colors p-1"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                  {couponError && (
+                    <p className="text-sm text-red-600 mt-2">{couponError}</p>
+                  )}
+                </div>
+
                 <div className="flex justify-between mb-2">
                   <span className="text-gray-600">Shipping {icarryService ? `(iCarry ${icarryService})` : ''}</span>
                   <span className="font-medium">
@@ -553,6 +631,14 @@ const CheckoutPage: React.FC = () => {
                   <span className="text-gray-600">Tax ({taxCalculation.taxBreakdown})</span>
                   <span className="font-medium">{formatCurrency(taxCalculation.totalTax)}</span>
                 </div>
+                
+                {/* Coupon Discount */}
+                {appliedCoupon && (
+                  <div className="flex justify-between mb-2">
+                    <span className="text-[#fe6302]">Coupon Discount ({appliedCoupon.discountPercent}% OFF)</span>
+                    <span className="font-medium text-[#fe6302]">-{formatCurrency(appliedCoupon.discountAmount)}</span>
+                  </div>
+                )}
                 
                 {/* Tax Breakdown */}
                 {shippingAddress.state.toLowerCase() === 'maharashtra' ? (

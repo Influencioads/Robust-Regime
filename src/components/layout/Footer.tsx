@@ -77,22 +77,34 @@ const Footer: React.FC = () => {
             <h3 className="text-xl font-bold mb-4">Policies</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">
+                <Link 
+                  to="/privacy-policy" 
+                  className="text-gray-400 hover:text-white transition-colors"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
                   Privacy Policy
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/terms-conditions" className="text-gray-400 hover:text-white transition-colors">
                   Terms & Conditions
                 </Link>
-              </li>
+              </li> */}
               <li>
-                <Link to="/shipping-policy" className="text-gray-400 hover:text-white transition-colors">
+                <Link 
+                  to="/shipping-policy" 
+                  className="text-gray-400 hover:text-white transition-colors"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
                   Shipping Policy
                 </Link>
               </li>
               <li>
-                <Link to="/return-refund-policy" className="text-gray-400 hover:text-white transition-colors">
+                <Link 
+                  to="/return-refund-policy" 
+                  className="text-gray-400 hover:text-white transition-colors"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
                   Return Policy
                 </Link>
               </li>
@@ -103,22 +115,33 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">Contact Us</h3>
             <ul className="space-y-3">
-              <li className="flex">
-                <MapPin className="h-5 w-5 mr-3 text-red-500 flex-shrink-0" />
-                <span className="text-gray-400">
-                  Asherestate, Varun, 3, 7 Upnagar, Nashik - Pune Rd, Nashik, Maharashtra 422101
-                </span>
-              </li>
               <li className="flex items-center">
-                <Phone className="h-5 w-5 mr-3 text-red-500" />
-                <a href="tel:+918446689098" className="text-gray-400 hover:text-white transition-colors">
-                  +91 8446689098
+                <a 
+                  href="https://www.google.com/maps/search/Asherestate,+Varun,+3,+7+Upnagar,+Nashik+-+Pune+Rd,+Nashik,+Maharashtra+422101"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center text-gray-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <MapPin className="h-5 w-5 mr-3 text-red-500 flex-shrink-0" />
+                  <span>Asherestate, Varun, 3, 7 Upnagar, Nashik - Pune Rd, Nashik, Maharashtra 422101</span>
                 </a>
               </li>
               <li className="flex items-center">
-                <Mail className="h-5 w-5 mr-3 text-red-500" />
-                <a href="mailto:contact@robustregime.com" className="text-gray-400 hover:text-white transition-colors">
-                  contact@robustregime.com
+                <a 
+                  href="tel:+918446689098" 
+                  className="flex items-center text-gray-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <Phone className="h-5 w-5 mr-3 text-red-500" />
+                  <span>+91 8446689098</span>
+                </a>
+              </li>
+              <li className="flex items-center">
+                <a 
+                  href="mailto:sales@robustregime.com" 
+                  className="flex items-center text-gray-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <Mail className="h-5 w-5 mr-3 text-red-500" />
+                  <span>sales@robustregime.com</span>
                 </a>
               </li>
             </ul>
